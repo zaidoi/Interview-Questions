@@ -1,50 +1,61 @@
-import React, { useState } from 'react';
-import './styles.css'
+body {
+  font-family: sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0;
+}
 
-// ✅ Export this so it can be tested 
-export const checkPasswordStrength = () => {
-};
+* {
+  box-sizing: border-box;
+}
 
-const PasswordStrength = () => {
+header,
+nav,
+main,
+aside,
+footer {
+  padding: 12px;
+}
 
-  const [passwordType, setPasswordType] = useState('')
-const [password,setPassword] = useState('')
-
-  const checkPassword = (e) => {
-    e.preventDefault()
-    
-
-    let count = 0;
-    if (/.{8,}/.test(password)) count++;
-    if (/[A-Z]/.test(password)) count++;
-    if (/[a-z]/.test(password)) count++;
-    if (/[0-9]/.test(password)) count++;
-    if (/[^A-Za-z0-9]/.test(password)) count++;
-
-
-    if (count === 0) setPasswordType('Weak Password');
-    else if (count === 1) setPasswordType('Level 1');
-    else if (count === 2 || count === 3) setPasswordType('Level 2');
-    else if (count === 4 || count === 5) setPasswordType('Level 3');
-
+header {
+  background-color: tomato;
+  height: 60px;
+  text-align:center;
   
-  }
+}
+.container{
+  display:grid;
+  grid-template-rows: 60px auto 100px;
+  min-height:100vh;
+}
+.columns{
+display: flex;
+flex:1;
+}
 
-  return (
-    <div>
-      <h2>Password Strength Checker</h2>
-      <form onSubmit={checkPassword}>
-        <input
-          type="password"
-          minLength={8}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type='submit'>Check Strength</button>
-      </form>
-      {passwordType && (<h3>Strength: {passwordType}</h3>)}
-    </div>
-  );
-};
+nav {
+  background-color: coral;
+  text-align:center;
+  width: 100px;
+  flex-shrink:0;
+}
 
-export default PasswordStrength;
+main {
+  background-color: moccasin;
+  text-align:center;
+  flex-grow:1;
+}
+
+aside {
+  background-color: sandybrown;
+  text-align:center;
+  flex-shrink: 0;
+  width:100px
+}
+
+footer {
+  background-color: slategray;
+  height: 100px;
+  text-align:center;
+  position:sticky;
+}
