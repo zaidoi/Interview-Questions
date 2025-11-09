@@ -1,10 +1,15 @@
-function capitalizeWords(sentence) {
+function chunkArray(arr, n) {
     // Your implementation
-    if (!sentence) return "";
-    let sent = sentence.trim().toLowerCase().split(/\s+/)
-    let result = sent.map(word => word[0].toUpperCase() + word.slice(1)).join(' ')
-    return result
+    if (arr.length === 0) return [];
+let result = []
+  for (let i = 0; i < arr.length; i += n){
+    result.push(arr.slice(i,i+n))
+  }
+       return result
+    
 }
+
 //For the purpose of user debugging.
-capitalizeWords("");
-module.exports = capitalizeWords
+//pass your array and chunk size in function call
+chunkArray([1, 2, 3], 5);
+module.exports = chunkArray
