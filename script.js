@@ -1,15 +1,12 @@
-function chunkArray(arr, n) {
+function isAnagram(str1, str2) {
     // Your implementation
-    if (arr.length === 0) return [];
-let result = []
-  for (let i = 0; i < arr.length; i += n){
-    result.push(arr.slice(i,i+n))
-  }
-       return result
     
+    let modifyStr1 = str1.toLowerCase().replace(/[^a-zA-Z]/g, '')
+    let modifyStr2 = str2.toLowerCase().replace(/[^a-zA-Z]/g, '')
+
+    return modifyStr1.split('').sort().join('') === modifyStr2.split('').sort().join('')
 }
 
 //For the purpose of user debugging.
-//pass your array and chunk size in function call
-chunkArray([1, 2, 3], 5);
-module.exports = chunkArray
+isAnagram("dormitory!!", "dirty room");
+module.exports = isAnagram
