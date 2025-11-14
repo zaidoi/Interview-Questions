@@ -4,15 +4,23 @@ function ChipsInput() {
   const [chipsInput, setChipsInput] = useState("")
   const [allChips,setAllChips] = useState([])
   const handleKey = (e) => {
-    if (chipsInput === '') {
+    
+    if (chipsInput === '' || chipsInput.trim() === "") {
+      setChipsInput('')
       return
     }
+    
     if (e.key === 'Enter') {
     e.preventDefault()
       const filter = allChips.filter(item => item !== chipsInput)
       setAllChips([...filter,chipsInput])
       setChipsInput('')
   }
+  }
+
+  const removeChip = (item) => {
+    const filter = allChips.filter(value => value !== item)
+    setAllChips([...filter])
   }
 
   return (
@@ -30,9 +38,12 @@ function ChipsInput() {
         {allChips.map(item => (
           <p style={{
             backgroundColor: "grey",
-            borderRadius: "2px",
+            borderRadius: "5px",
             padding:"5px"
-          }}>{item}</p>
+          }}>{item}<span onClick={(e)=>removeChip(item)} style={{
+              marginLeft: "5px",
+            color:"red"
+          }}>X</span></p>
       ))}
         </div>
     </div>
