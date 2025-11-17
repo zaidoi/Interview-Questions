@@ -1,17 +1,16 @@
-function countVowels(str) {
-    // Your implementation
-    let count = 0;
-    let vowelarr = str.trim().split('')
-    for (let i = 0; i < vowelarr.length; i++){
-        if (vowelarr.length === 0) return 0
-        if (vowelarr[i] == 'e' || vowelarr[i] == 'i' || vowelarr[i] == 'o' || vowelarr[i] == 'u' || vowelarr[i] == 'E' || vowelarr[i] == 'I' || vowelarr[i] == 'O' || vowelarr[i] == 'U' || vowelarr[i] == 'a' || vowelarr[i] == 'A') {
-            count++
-        } 
+function findMaxNumber(arr) {
+    if (arr.length === 0) return null;
+
+    let result = arr[0];
+
+    for (let i = 1; i < arr.length; i++) {
+        if (arr[i] > result) {
+            result = arr[i];
+        }
     }
-  return count
+
+    return result;
 }
 
-//For the purpose of user debugging.
-countVowels("hello");
-
-module.exports = countVowels
+console.log(findMaxNumber([12,13,15,15]));
+module.exports = findMaxNumber;
