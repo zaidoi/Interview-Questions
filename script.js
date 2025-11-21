@@ -1,12 +1,18 @@
-function reverseWords(sentence) {
+function curry(fn) {
     // Your implementation
-    if(sentence.length ===0 ) return ''
-    let str = sentence.split('').reverse().join('')
-    let str2 = str.split(' ').reverse().join(' ')
-    return str2
+    return function curried(...args) {
+
+        if (args.length >= fn.length) {
+            return fn(...args)
+        }
+
+    return function (...nextArgs) {
+        return  curried(...args,...nextArgs)
+    }
+    }
 }
 
 //For the purpose of user debugging.
-reverseWords("Hello World");
-
-module.exports = reverseWords
+//pass appropriate input in below function call
+curry(1,2,3);
+module.exports = curry 
