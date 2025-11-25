@@ -1,18 +1,18 @@
-function curry(fn) {
+function shuffle(array) {
     // Your implementation
-    return function curried(...args) {
+    if (array.length === 0) return[];
 
-        if (args.length >= fn.length) {
-            return fn(...args)
-        }
+    let arr = [...array];
 
-    return function (...nextArgs) {
-        return  curried(...args,...nextArgs)
+    for (let i = arr.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
     }
-    }
+
+    return arr;
 }
 
 //For the purpose of user debugging.
-//pass appropriate input in below function call
-curry(1,2,3);
-module.exports = curry 
+shuffle([1, 2, 3, 4, 5]);
+
+module.exports = shuffle
