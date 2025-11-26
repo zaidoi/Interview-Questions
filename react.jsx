@@ -1,76 +1,86 @@
-// PostCard.js
-//👍 likes | 👎 dislikes | 👁️ views
-export default function PostCard({title,body,tags,reactions,views}) {
-    return (
-    <div style={{
-    display: "flex",
-    flexDirection: "column",
-    backgroundColor: "lightgray",
-    borderRadius: "5px",
-    padding: "15px",
-    flexWrap: "wrap"
-  }}>
-    
-    <h2>{title}</h2>
-    <p>{body}</p>
-  
-    <div style={{ display: "flex", gap: "5px", color: "blue" }}>
-      {tags.map((item, index) => (
-        <p key={index}>#{item}</p>
-      ))}
-    </div>
-  
-   
-    <div style={{
-      display: "flex",
-      gap: "15px",
-      color: "gray",
-      marginTop: "8px",
-      alignItems: "center"
-    }}>
-  
-      <p>👍 {reactions.likes}</p>
-  
-      <div style={{
-        width: "1px",
-        height: "20px",
-        backgroundColor: "gray"
-      }}></div>
-  
-      <p>👎 {reactions.unlikes}</p>
-  
-      <div style={{
-        width: "1px",
-        height: "20px",
-        backgroundColor: "gray"
-      }}></div>
-  
-      <p>👁️ {views}</p>
-  
-    </div>
-  
-  </div>
-  
-    );
-  }
-  
-
-  // App.js
+import React, { useEffect, useState } from "react";
+import recipesData from "./recipesData";
 import "./styles.css";
-import PostCard from "./PostCard.js";
 
-export default function BlogPosts() {
+const RecipeFilterApp = () => {
+  const [cartItems, setCartItems] = useState(0);
+  const [avgRating, setAvgRating] = useState(0);
+  const [selectedRating, setSelectedRating] = useState("");
+  const [recipe, setRecipe] = useState(recipesData);
+
+  // Filter and calculate average whenever rating changes
+  useEffect(() => {
+    const filtered = recipesData.filter(
+      (item) => item.rating >= Number(selectedRating)
+    );
+    setRecipe(filtered);
+
+    // Calculate Avg
+    if (filtered.length === 0) {
+      setAvgRating(0);
+    } else {
+      const total = filtered.reduce((sum, item) => sum + item.rating, 0);
+      setAvgRating((total / filtered.length).toFixed(2));
+    }
+  }, [selectedRating]);
+
+  const addCart = () => {
+    setCartItems((prev) => prev + 1);
+  };
+
   return (
     <div>
-      <h2>Blog Posts </h2>
-      <PostCard title={"Ronaldo"} body={"jfadfkadjfkafjajfdklfjdfkwadkfdfjadkfjadkfj"}
-        tags={["history", "geog"]}
-        reactions={{
-          likes: 1,
-          unlikes: 10,
+      <h1>🍽️ Recipe Explorer</h1>
+
+      {/* FILTER BAR */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          padding: "5px 0",
+          alignItems: "center",
         }}
-        views={34}
-      />
+      >
+        <div style={{ display: "flex", gap: "10px" }}>
+          <label htmlFor="rating-filter">Filter by Rating:</label>
+
+          <select
+            id="rating-filter"
+            value={selectedRating}
+            onChange={(e) => setSelectedRating(e.target.value)}
+          >
+            <option value="">All</option>
+            <option value="4.0">4.0+</option>
+            <option value="4.3">4.3+</option>
+            <option value="4.5">4.5+</option>
+            <option value="4.7">4.7+</option>
+            <option value="4.9">4.9+</option>
+          </select>
+        </div>
+
+        <h2>Cart Items: {cartItems}</h2>
+      </div>
+
+      <div style={{ textAlign: "center" }}>
+        <h3>Average Rating: {avgRating}</h3>
+      </div>
+
+      {/* CARDS */}
+      <div className="cards">
+        {recipe.map((item) => (
+          <div className="card" key={item.id}>
+            <img src={item.image} alt={item.name} />
+            <h3>{item.name}</h3>
+            <p>Cuisine: {item.cuisine}</p>
+            <p>
+              Rating: {item.rating} <span>({item.reviewCount} reviews)</span>
+            </p>
+            <button onClick={addCart}>Add to Cart</button>
+          </div>
+        ))}
+      </div>
     </div>
   );
-}
+};
+
+export default RecipeFilterApp;
