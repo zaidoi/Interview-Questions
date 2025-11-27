@@ -1,18 +1,14 @@
-function shuffle(array) {
+function sum(...args) {
     // Your implementation
-    if (array.length === 0) return[];
-
-    let arr = [...array];
-
-    for (let i = arr.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
+    let total = 0
+    for (let item of args) {
+        total+= item
     }
-
-    return arr;
+    console.log(total)
+    return total
 }
 
 //For the purpose of user debugging.
-shuffle([1, 2, 3, 4, 5]);
+sum(5,-5,10,20);
 
-module.exports = shuffle
+module.exports = sum
