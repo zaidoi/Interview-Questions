@@ -1,38 +1,47 @@
-import React, { Component, useState } from 'react';
-import './styles.css';
+import React, { Component } from 'react';
+import './styles.css'; 
 
-
-const user = {
-  name: 'Jane Doe',
-  bio: 'Frontend developer who loves React and coffee ☕️',
-  image: 'https://do6gp1uxl3luu.cloudfront.net/question-webp/dummyUser.jpg'
-};
-
-
-
-class UserProfile extends Component {
-
+class Tooltip extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOn:false
+      hoveredIndex:null
     }
   }
 
-  toggleState = () => {
-  this.setState({isOn: !this.state.isOn})
-}
+  handleMouseEnter = (index) => {
+    this.setState({hoveredIndex:index})
+  }
 
+  handleMouseLeave = () => {
+    this.setState({hoveredIndex: null})
+  }
   render() {
+    const icons = [
+      { emoji: '🏠', label: 'Home' },
+      { emoji: '📧', label: 'Email' },
+      { emoji: '⚙️', label: 'Settings' }
+    ];
+
     return (
-      <div className="user-profile">
-        <img src={user.image} style={{ width:"190px" , borderRadius:"100px",boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)'}} />
-        <h2>{user.name}</h2>
-        <button onClick={this.toggleState}>{this.state.isOn ? 'Hide Bio' : 'Show Bio'}</button>
-        {this.state.isOn ? <p>{user.bio}</p> : null}
+      <div className="tooltip-container">
+        {icons.map((icon, index) => (
+          <div
+            key={index}
+            className="tooltip-item"
+            onMouseEnter={() => this.handleMouseEnter(index)}
+            onMouseLeave={this.handleMouseLeave}
+          >
+            <span>{icon.emoji}</span>
+            {this.state.hoveredIndex === index && (
+              <div className="tooltip-box">{icon.label}</div>
+            )}
+           
+          </div>
+        ))}
       </div>
     );
   }
 }
 
-export default UserProfile;
+export default Tooltip;
