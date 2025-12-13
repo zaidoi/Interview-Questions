@@ -1,47 +1,21 @@
-import React, { Component } from 'react';
-import './styles.css'; 
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './Navbar';
+import Home from './Home';
+import About from './About';
 
-class Tooltip extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hoveredIndex:null
-    }
-  }
-
-  handleMouseEnter = (index) => {
-    this.setState({hoveredIndex:index})
-  }
-
-  handleMouseLeave = () => {
-    this.setState({hoveredIndex: null})
-  }
-  render() {
-    const icons = [
-      { emoji: '🏠', label: 'Home' },
-      { emoji: '📧', label: 'Email' },
-      { emoji: '⚙️', label: 'Settings' }
-    ];
-
-    return (
-      <div className="tooltip-container">
-        {icons.map((icon, index) => (
-          <div
-            key={index}
-            className="tooltip-item"
-            onMouseEnter={() => this.handleMouseEnter(index)}
-            onMouseLeave={this.handleMouseLeave}
-          >
-            <span>{icon.emoji}</span>
-            {this.state.hoveredIndex === index && (
-              <div className="tooltip-box">{icon.label}</div>
-            )}
-           
-          </div>
-        ))}
+const App = () => {
+  return (
+    <Router>
+      <Navbar />
+      <div className="page-content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About/>}/>
+        </Routes>
       </div>
-    );
-  }
-}
+    </Router>
+  );
+};
 
-export default Tooltip;
+export default App;
